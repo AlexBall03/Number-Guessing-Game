@@ -30,9 +30,16 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h> // log() and ceil()
 
-int main() {
-    printf("Hello World!");
-
-    return 0;
+int main(void) {
+    // Declare Variables
+    int lowRange = 1;
+    int highRange = 100;
+    int possibleGuesses = highRange + lowRange - 1; // Range of possible guesses or numbers left
+    int maxTurns = ceil(log(possibleGuesses) / log(2)); // log base 2 of possible guesses rounded up
+    int guess; // The number that the computer guesses
+    int player; // (1) Yes, you guesses my number, (2) No, guess a lower number, (3) No, guess a higher number
+    int numTurns = 1; // Keep track of the number of turns/guesses
 }
