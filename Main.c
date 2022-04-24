@@ -1,5 +1,5 @@
 /*
-    Think of a number from 1 to 100, you can guess you number within 7 turns
+    Think of a number from 1 to 100, I can guess you number within 7 turns
 
     Is your number 50?
     No, guess a higher number
@@ -11,10 +11,10 @@
     No, guess a lower number
 
     Is your number 81?
-    Yes, you guess my number within 7 turns! (You guessed it in 4 turns)
+    Yes, you guessed my number within 7 turns! (You guessed it in 4 turns)
     --------------------------------------------------------------------------
     HOW THIS WORKS:
-    Think of a number from 1 to 100, you can guess you number within 7 turns.
+    Think of a number from 1 to 100, I can guess you number within 7 turns.
 
     Is your number roundUp(100 + 1 - 1) / 2 == 50? Range 1 to 100
     No, guess a higher number (newRange = 51 to 100)(50 possible guesses)
@@ -26,7 +26,7 @@
     No, guess a lower number (newRange = 76 to 87) (12 possible guesses)
 
     Is your number roundUp(87 + 76 -1) / 2 == 81?
-    Yes, you guess my number within 7 turns! (You guessed it in 4 turns)
+    Yes, you guessed my number within 7 turns! (You guessed it in 4 turns)
 */
 
 #include <stdio.h>
@@ -42,4 +42,35 @@ int main(void) {
     int guess; // The number that the computer guesses
     int player; // (1) Yes, you guesses my number, (2) No, guess a lower number, (3) No, guess a higher number
     int numTurns = 1; // Keep track of the number of turns/guesses
+
+    printf("Think of a number from %d to %d, I can guess your number within %d turns \n", lowRange, highRange, maxTurns);
+
+    // Do a divide and conquer algorithm
+    // The actual guessing game
+    do{
+        // Create or update the new range or possible number of guesses
+        possibleGuesses = highRange + lowRange - 1;
+        guess = (int)ceil(possibleGuesses / 2.0);
+
+        printf("Is your number %d? \n", guess);
+        printf("(1) Yes, you guesses my number \n");
+        printf("(2) No, guess a lower number \n");
+        printf("(3) No, guess a higher number \n");
+        scanf("%d", &player); // Get the players feedback
+
+        if(player == 3)
+            lowRange = guess + 1; // Update the new low range
+        else if(player == 2)
+            highRange = guess - 1; // Update the new high range
+        else if(player == 1)
+            break; // Break our of loop, because we guesses the players number
+
+        numTurns++; // Increment the number of turns
+    } while (player != 1 && numTurns <= maxTurns);
+
+    // Print the results
+    if(numTurns > maxTurns)
+        printf("You made a mistake, you've exceeded the maximum number of turns \n"); 
+    else
+        printf("I guessed your number in %d turn(s)! \n", numTurns);
 }
